@@ -7,21 +7,13 @@ from sqlalchemy.orm import Session
 
 sys.path.append("..")
 import models  # noqa: E402
-from database import SessionLocal, engine  # noqa: E402
+from database import engine, get_db  # noqa: E402
 
 from .auth import get_current_user, get_user_exception  # noqa: E402
 
 router = APIRouter(
     prefix="/address", tags=["address"], responses={404: {"description": "Not found"}}
 )
-
-
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
 
 
 class Address(BaseModel):

@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 sys.path.append("..")
 import models  # noqa: E402
-from database import SessionLocal  # noqa: E402
+from database import get_db  # noqa: E402
 
 SECRET_KEY = "asdasdaskjijIHJASLAkdn123asd4asA"
 ALGORITHM = "HS256"
@@ -33,14 +33,6 @@ oauth2_bearer = OAuth2PasswordBearer(tokenUrl="token")
 router = APIRouter(
     prefix="/auth", tags=["auth"], responses={401: {"user": "Not authorized"}}
 )
-
-
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
 
 
 def get_password_hash(password: str) -> str:

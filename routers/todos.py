@@ -7,21 +7,13 @@ from sqlalchemy.orm import Session
 
 sys.path.append("..")
 import models  # noqa: E402
-from database import SessionLocal  # noqa: E402
+from database import get_db  # noqa: E402
 
 from .auth import get_current_user  # noqa: E402
 
 router = APIRouter(
     prefix="/todos", tags=["todos"], responses={404: {"description": "Not found"}}
 )
-
-
-def get_db():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
 
 
 class Todo(BaseModel):
